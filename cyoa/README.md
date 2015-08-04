@@ -15,3 +15,12 @@ The goal here is to consume and transform an API that is provided elsewhere. Int
   * https://api.slack.com/
 
 Good luck!
+
+
+
+
+========================== FollowUp Project Outline =====================================
+
+The API I want to use is some free tier SMS API like Twilio. The app would be called "FollowUp" and the purpose of it would be to create tasks for people and assign them via phone number. You can also make teams or groups of people to assign tasks to. But the main point of it is that it will have background workers that automatically text and follow up with people of the task when they still havent completed it. Depending on when you set the due date and how long the task will take the app will "pester" the person who is supposed to do the task with FollowUp text messages asking for status updates.They can quick reply 1-4 for answers like UNSTARTED, STARTED, BLOCKED, FINISHED, or just a custom message. Then the task creator will see these status updates in real time. The app will send followUp texts more and more frequently the sooner the due date gets without being finished (also will depend on how long the task will take). I want to create a mobile friendly front end where users can create and view these tasks / status updates as well. 
+
+The value from this app comes from not having to followUp with people on everyday tasks and TODOs. But even more so because the creator cannot (on purpose) configure the frequency of the reminders.....there is less direct frustration with the person who created the tasks because they are not the ones controlling the frequency of pestering....its taskees own fault they are starting to get lots of messages because they didnt complete the task on a nearing deadline.
