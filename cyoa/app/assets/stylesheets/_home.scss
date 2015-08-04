@@ -1,0 +1,109 @@
+.home {
+  text-align: center;
+
+  h1 {
+    color: $primary-color;
+    font-size: 105px;
+    font-family: 'Pacifico', Helvetica, sans-serif;
+    text-shadow: 1px 1px 3px black;
+    margin-top: 100px;
+  }
+
+  h2 {
+    color: black;
+    font-size: 30px;
+    font-family: Helvetica, sans-serif;
+    margin-top: 30px;
+    font-style: italic;
+  }
+
+  .home-buttons {
+    padding: 20px;
+    margin: 20px auto;
+
+    .close-container {
+      color: black;
+      display: block;
+      width: 50px;
+      margin: 5px auto;
+      opacity: 0;
+      font-size: 5px;
+      cursor: pointer;
+      transition: all ease 0.3s;
+
+      &:hover {
+        color: $third-color;
+      }
+
+      &.active {
+        opacity: 1;
+        font-size: 40px;
+      }
+    }
+
+    .button-container {
+      width: 200px;
+      max-width: 85%;
+      padding: 15px;
+      margin: 25px;
+      vertical-align:middle;
+      color: white;
+      font-size: 22px;
+      font-weight: bold;
+      font-family: sans-serif;
+      background-color: $secondary-color;
+      border-radius: 10px;
+      box-shadow: 1px 1px 1px black;
+      display: inline-block;
+      cursor: pointer;
+      overflow: hidden;
+      transition: all ease 0.3s;
+
+      p {
+        text-shadow: 1px 1px 1px black;
+      }
+
+      & > div {
+        visibility: hidden;
+        max-height: 0;
+        opacity: 0;
+        transition: all ease 0.3s;
+      }
+
+      &:hover {
+        background-color: $primary-color;
+      }
+
+      &.active {
+        width: 400px;
+        padding: 40px;
+        background-color: $secondary-color;
+        cursor: default;
+
+        & > div {
+          visibility: visible;
+          margin-top: 15px;
+          opacity: 1;
+          max-height: 500px;
+        }
+      }
+
+      &.inactive {
+        width: 0;
+        height: 0;
+        margin: 0;
+        padding: 0;
+        opacity: 0;
+      }
+
+      .form-control {
+        padding: 25px;
+        font-size: 18px;
+      }
+
+      input[type=submit] {
+        padding: 10px 30px 35px 30px;
+      }
+    }
+  }
+}

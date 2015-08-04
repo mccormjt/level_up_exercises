@@ -1,0 +1,15 @@
+<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div class='form-group'>
+    <%= f.telephone_field :phone_number, class: 'form-control', placeholder: 'phone number' %>
+  </div>
+
+  <div class='form-group'>
+    <%= f.password_field :password, class: 'form-control', autocomplete: 'off', placeholder: 'password' %>
+  </div>
+
+  <div class='actions'>
+    <%= f.submit 'Go', class: 'form-control btn btn-primary' %>
+  </div>
+<% end %>
