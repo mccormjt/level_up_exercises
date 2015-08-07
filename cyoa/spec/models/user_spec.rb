@@ -1,5 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it 'validates presence of name'
+
+  it 'validates presence of email'
+
+  it 'validates correct email format'
+
+  it 'validates presence of password'
 end

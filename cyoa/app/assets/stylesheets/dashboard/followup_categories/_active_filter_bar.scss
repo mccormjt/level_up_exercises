@@ -1,0 +1,23 @@
+.active-filter-bar {
+  position: absolute;
+  top: 69px;
+  left: 0;
+  width: 100%;
+  height: $border-grid-width;
+  background-color: $primary-color;
+  transition: all ease-in-out 0.25s;
+
+  &.first-active {
+    left: 0;
+  }
+
+  &.second-active {
+    margin-left: $border-grid-width;
+    left: 100%;
+  }
+
+  &.third-active {
+    margin-left: $border-grid-width * 2;
+    left: 200%;
+  }
+}

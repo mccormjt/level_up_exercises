@@ -5,10 +5,25 @@
   <%= stylesheet_link_tag    'http://fonts.googleapis.com/css?family=Pacifico', media: 'all', 'data-turbolinks-track' => true %>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+  <%= growlyflash_static_notices %>
 </head>
 <body>
 
+<header>
+  <% if user_signed_in? %>
+    <h1 class='logo'>FollowUp</h1>
+    <div class='account-buttons'>
+      <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
+      <span>|</span>
+      <a class='user-account'>
+        <%= current_user.first_name %>
+      </a>
+    </div>
+  <% end %>
+</header>
+
 <%= yield %>
+
 <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 
 </body>

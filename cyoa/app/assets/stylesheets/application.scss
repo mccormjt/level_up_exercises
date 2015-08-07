@@ -18,7 +18,12 @@
 @import 'font-awesome';
 @import 'bootstrap-sprockets';
 @import 'bootstrap';
+@import 'growlyflash';
 @import 'global';
 
 @import 'header';
 @import 'home';
+
+@import 'dashboard/followup_categories/followup_categories';
+@import 'dashboard/followup_categories/active_filter_bar';
+@import 'dashboard/followup_categories/open_new_task';

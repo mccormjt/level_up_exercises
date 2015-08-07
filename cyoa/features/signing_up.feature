@@ -16,16 +16,16 @@ Feature: Signing Up
 
   Scenario: Not entering a name
     And I submit the signup form without a name
-    Then I should see a "no name" form warning
+    Then I should see a "name" danger alert
 
-  Scenario: Entering too short of a phone number
-    And I submit the signup form with too short of a phone number
-    Then I should see a "phone number too short" form warning
+  Scenario: Entering an invalid phone number
+    And I submit the signup form with an invalid phone number
+    Then I should see a "phone number" danger alert
 
   Scenario: Entering too short of a password
     And I submit the signup form with too short of a password
-    Then I should see a "password too short" form warning
+    Then I should see a "password is too short" danger alert
 
   Scenario: Entering mismatching passwords
     And I submit the signup form with mismatching passwords
-    Then I should see a "mismatching passwords" form warning
+    Then I should see a "doesn't match password" danger alert

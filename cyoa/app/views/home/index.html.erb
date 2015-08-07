@@ -1,20 +1,18 @@
 <div class='home'>
-	<header></header>
-
-	<h1>FollowUp</h1>
+	<h1 class='logo'>FollowUp</h1>
 	<h2>Automated task follow-ups</h2>
 
   <div class='home-buttons'>
-    <%= fa_icon 'chevron-circle-left', class: 'close-container' %>
+    <%= fa_icon 'chevron-circle-left', class: "close-container #{@close_container_class}" %>
 
-    <button class='button-container login'>
+    <button class='button-container login <%= @login_class %>'>
       <p>Login</p>
       <div>
         <%= render 'devise/sessions/new' %>
       </div>
     </button>
 
-    <button class='button-container signup'>
+    <button class='button-container signup <%= @signup_class %>'>
       <p>Signup</p>
       <div>
         <%= render 'devise/registrations/new' %>
