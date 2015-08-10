@@ -1,4 +1,4 @@
-ActiveFilterBar = new function() {
+ActiveFilter = new function() {
 	var self                      = this,
 		BAR_STATE_CLASSES         = [ 'first-active', 'second-active', 'third-active' ],
 		ACTIVE_FILTER_TAB_CLASS   = 'active',

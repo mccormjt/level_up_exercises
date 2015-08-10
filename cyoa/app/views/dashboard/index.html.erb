@@ -1,10 +1,15 @@
 <div class='dashboard'>
   <div class='followup-categories'>
-    <div class='category new-task'>
-      <button>
-        <%= fa_icon 'plus' %>
-        <span>New Task</span>
-      </button>
+    <div class='filter-placeholder'></div>
+
+    <div class='category new-task-container'>
+      <div class='new-task'>
+        <div class='new-task-title'>
+          <%= fa_icon 'plus' %>
+          <span>New Task</span>
+        </div>
+        <%= render 'dashboard/create_task' %>
+      </div>
     </div>
 
     <div class='category filter inbox'>
@@ -21,6 +26,14 @@
     <div class='category filter archived'>
       <%= fa_icon 'archive' %>
       <span>Archived</span>
+    </div>
+  </div>
+
+  <div class='followup-filter-content inbox-view'>
+    <div class='prism'>
+      <div class='followup-content inbox-content'>INBOX 11111111</div>
+      <div class='followup-content sent-content'>SENT 22222222</div>
+      <div class='followup-content archived-content'>ARCHIVED 3333333</div>
     </div>
   </div>
 </div>

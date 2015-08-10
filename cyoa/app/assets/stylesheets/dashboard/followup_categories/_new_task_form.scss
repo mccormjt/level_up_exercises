@@ -1,0 +1,86 @@
+.new-task-form {
+  width: 100%;
+  max-width: 850px;
+  padding: 5%;
+  box-sizing: border-box;
+  border-radius: 10px;
+  margin: auto;
+  flex: 1;
+  overflow-y: auto;
+
+  .form-group.expander {
+    margin-bottom: 30px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 1px 1px 1px;
+    height: 40px;
+    position: relative;
+    overflow: hidden;
+    transition: all ease 0.2s;
+
+    label {
+      float: left;
+      font-size: 18px;
+      color: #204d74;
+      position: absolute;
+      left: 10px;
+      top: 7.5px;
+      z-index: 15;
+      pointer-events: none;
+    }
+
+    .input-item {
+      height: 100%;
+      width: 100%;
+      font-size: 18px;
+      position: absolute;
+      left: 0;
+      bottom: -1px;
+      color: black;
+      resize: none;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    td.day {
+      color: black;
+    }
+
+    &.expand {
+      height: 75px;
+
+      &.medium {
+        height: 90px;
+      }
+
+      &.big {
+        height: 135px;
+      }
+
+      .input-item {
+        height: 40px;
+      }
+
+      textarea.input-item {
+        height: 100px;
+      }
+    }
+  }
+
+  .actions {
+    display: flex;
+    flex-direction: row;
+
+    .btn {
+      padding: 12px;
+      font-size: 18px;
+      font-weight: bold;
+      flex: 1;
+      box-shadow: 1px 1px 1px #333;
+
+      &.cancel-btn {
+        margin-left: 15px;
+      }
+    }
+  }
+}

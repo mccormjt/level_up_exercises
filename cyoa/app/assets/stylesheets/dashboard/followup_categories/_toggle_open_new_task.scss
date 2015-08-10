@@ -43,6 +43,7 @@
     margin-left: -50%;
     width: 100%;
     height: 100%;
+    font-size: 20px;
   }
   
   100% {
@@ -52,17 +53,36 @@
     width: 90vw;
     height: 80vh;
     border-radius: 10px;
+    font-size: 30px;
   }
 }
 
-.new-task.opened {
-  button {
-    animation: open-new-task ease-in-out 0.55s forwards;
+.new-task-container {
+  .new-task {
+    font-size: 20px;
+  }
+
+  &, &.closed {
+    .new-task-form {
+      opacity: 0;
+      visibility: hidden;
+      transition: all ease 0.2s;
+      transition-delay: 0;
+    }
   }
 }
 
-.new-task.closed {
-  button {
-    animation: open-new-task ease-in-out 0.6s reverse;
+.new-task-container.opened .new-task {
+  animation: open-new-task ease-in-out 0.6s forwards;
+  cursor: default;
+
+  .new-task-form {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0.45s;
   }
+}
+
+.new-task-container.closed .new-task {
+  animation: open-new-task ease-in-out 0.6s reverse;
 }

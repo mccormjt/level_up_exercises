@@ -11,6 +11,7 @@
  * file per style scope.
  *
  *= require_self
+ *= require bootstrap-datepicker3
  */
 
 @import 'variables';
@@ -24,6 +25,11 @@
 @import 'header';
 @import 'home';
 
+@import 'dashboard/dashboard';
 @import 'dashboard/followup_categories/followup_categories';
 @import 'dashboard/followup_categories/active_filter_bar';
-@import 'dashboard/followup_categories/open_new_task';
+@import 'dashboard/followup_categories/toggle_open_new_task';
+@import 'dashboard/followup_categories/new_task_form';
+@import 'dashboard/followup_categories/recipients';
+
+@import 'dashboard/followup_filter_content/followup_filter_content';
