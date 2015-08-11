@@ -12,6 +12,8 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require underscore
+//= require jquery.typewatch
 //= require bootstrap
 //= require bootstrap-datepicker
 //= require growlyflash

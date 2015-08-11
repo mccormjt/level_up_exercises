@@ -7,8 +7,8 @@
     height: 100%;
     position: absolute;
     -webkit-transform-style: preserve-3d;
-    -webkit-transform-origin: 50% 50% -25vw;
-    transition: all ease 0.7s;
+    -webkit-transform-origin: 50% 50% -29vw;
+    transition: all ease 0.6s;
 
     .followup-content {
       position: absolute;
@@ -35,7 +35,7 @@
     }
   }
 
-  &.inbox-view {
+  &.inbox-active {
     .prism {
       -webkit-transform: rotateY(0deg);
     }
@@ -45,7 +45,7 @@
     }
   }
 
-  &.sent-view {
+  &.sent-active {
     .prism {
       -webkit-transform: rotateY(-120deg);
     }
@@ -55,7 +55,7 @@
     }
   }
 
-  &.archived-view {
+  &.archived-active {
     .prism {
       -webkit-transform: rotateY(-240deg);
     }

@@ -1,9 +1,10 @@
 ActiveFilter = new function() {
 	var self                      = this,
-		BAR_STATE_CLASSES         = [ 'first-active', 'second-active', 'third-active' ],
+		BAR_STATE_CLASSES         = [ 'inbox-active', 'sent-active', 'archived-active' ],
 		ACTIVE_FILTER_TAB_CLASS   = 'active',
 		bar                       = $('.active-filter-bar'),
 		filters                   = $('.followup-categories .filter').click(changeFilterHandler),
+		filteredContent			  = $('.followup-filter-content'),
 		lastStateIndex            = -1;
 
 	self.goToState = function(nextStateIndex) {
@@ -13,6 +14,8 @@ ActiveFilter = new function() {
 		bar.removeClass(lastStateClass).addClass(nextStateClass);
 		$(filters[lastStateIndex]).removeClass(ACTIVE_FILTER_TAB_CLASS);
 		$(filters[nextStateIndex]).addClass(ACTIVE_FILTER_TAB_CLASS);
+		filteredContent.removeClass(lastStateClass);
+		filteredContent.addClass(nextStateClass);
 		lastStateIndex = nextStateIndex;
 	};
 
@@ -22,4 +25,4 @@ ActiveFilter = new function() {
 	}
 };
 
-ActiveFilterBar.goToState(0);
+ActiveFilter.goToState(0);

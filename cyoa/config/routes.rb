@@ -2,13 +2,19 @@ Rails.application.routes.draw do
   
   root 'home#index'
 
+  devise_for :users, :controllers => { sessions: 'sessions', registrations: 'registrations' }  
+
   get '/login', to: 'home#login'
 
   get '/signup', to: 'home#signup'
 
   get '/dashboard', to: 'dashboard#index'
 
-  devise_for :users, :controllers => { sessions: 'sessions', registrations: 'registrations' }  
+  resource(:recipients, only: :destroy) do
+    get  'search'
+    post 'ensure'
+  end
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

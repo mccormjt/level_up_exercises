@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150804195824) do
+ActiveRecord::Schema.define(version: 20150810154726) do
+
+  create_table "recipients", force: :cascade do |t|
+    t.string   "name",         default: "", null: false
+    t.string   "phone_number", default: "", null: false
+    t.string   "user_id",      default: "", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "recipients", ["user_id", "phone_number"], name: "index_recipients_on_user_id_and_phone_number", unique: true
 
   create_table "users", force: :cascade do |t|
     t.string   "email"

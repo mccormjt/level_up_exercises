@@ -7,16 +7,16 @@
   background-color: $primary-color;
   transition: all ease-in-out 0.25s;
 
-  &.first-active {
+  &.inbox-active {
     left: 0;
   }
 
-  &.second-active {
+  &.sent-active {
     margin-left: $border-grid-width;
     left: 100%;
   }
 
-  &.third-active {
+  &.archived-active {
     margin-left: $border-grid-width * 2;
     left: 200%;
   }
