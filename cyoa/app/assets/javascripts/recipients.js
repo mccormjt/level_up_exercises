@@ -12,8 +12,8 @@ Recipients = $(function() {
 	addBtn.click(addRecipientToTask);
 	recipients.on('focusin mousedown', focusRecipients);
 	$(document).on('mousedown', unfocusRecipients);
-	recipients.on('click', '.'+ ADDED_RECIPIENT_CLASS     + ' .remove', removeAddedRecipientFromTask);
-	recipients.on('mousedown', '.'+ SUGGESTED_RECIPIENT_CLASS + ' .remove', deleteRecipientFromUserSuggestions);
+	recipients.on('click',     '.' + ADDED_RECIPIENT_CLASS     + ' .remove', removeAddedRecipientFromTask);
+	recipients.on('mousedown', '.' + SUGGESTED_RECIPIENT_CLASS + ' .remove', deleteRecipientFromUserSuggestions);
 	recipients.on('mousedown', '.' + SUGGESTED_RECIPIENT_CLASS, addSuggestedRecipientToTaskDom);
 	$(addName).add(addNumber).typeWatch({ callback: fetchRecipientSuggestions, captureLength: 0, wait: 50 });
 
