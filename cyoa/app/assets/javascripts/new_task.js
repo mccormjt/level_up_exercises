@@ -7,14 +7,18 @@ NewTaskForm = new function() {
 		.on('click', '.new-task-container:not(.opened) .new-task', openNewTaskCreator)
 		.on('click', '.new-task-form .cancel-btn', closeNewTaskCreator);
 
-	newTask.submit(createNewTask);
+	newTaskForm.submit(preventFormSubmission);
+
+	$('.create-btn', newTaskForm).on('click', createNewTask);
 
 	$('.expander', newTaskForm).on('focusin', expandFormGroup)
-								 .on('focusout form-group:refresh', collapseFormGroupIfEmpty);
+							   .on('focusout form-group:refresh', collapseFormGroupIfEmpty);
 
 	$('.date.expander .input-item').datepicker({
-	    startDate: 'today'
+	    startDate: 'today',
+	    format: 'dd/mm/yyyy'
 	});
+
 
 	self.reset = function() {
 		Recipients.clear();
@@ -23,14 +27,27 @@ NewTaskForm = new function() {
 	};
 
 	self.extractFormData = function() {
-		return { 
-			recipient_ids: Recipients.getAddedRecipientIds(),
+		var assignments = _.map(Recipients.getAddedRecipientIds(), function(recipientId) {
+			return { recipient_id: recipientId }
+		});
+
+		return { task: { 
+			assignments_attributes: assignments,
 			subject:  $('#subject', newTaskForm).val(),
 			due_date: $('#due-date', newTaskForm).val(),
 			estimated_completion_hours: $('#estimated-completion-hours', newTaskForm).val(),
 			description: $('#description', newTaskForm).val()
-		}
+		}}
 	};
+
+
+	function preventFormSubmission(event) {
+		event.preventDefault();
+	}
+
+	function createNewTask() {
+		$.post('/tasks', self.extractFormData()).done(closeNewTaskCreator);
+	}
 
 	function openNewTaskCreator() {
 		toggleNewTask(true);
@@ -47,11 +64,6 @@ NewTaskForm = new function() {
 		newTask.removeClass(fromClass);
 		newTask[0].offsetWidth = newTask[0].offsetWidth // trigger reflow --> hack to allow reverse animation
 		newTask.addClass(toClass);
-	}
-
-	function createNewTask(event) {
-		event.preventDefault();
-		$.post('/tasks', self.extractFormData()).done(closeNewTaskCreator);
 	}
 
 	function expandFormGroup(event) {

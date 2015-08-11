@@ -1,4 +1,4 @@
-@keyframes open-new-task {
+@mixin open-new-task-keyframes($width, $left) {
   0% {
     top: 0;
     left: 0;
@@ -47,15 +47,40 @@
   }
   
   100% {
-    top: 50px;
-    left: 5vw;
-    margin-left: -38px;
-    width: 90vw;
-    height: 80vh;
+    top: 150px;
+    left: $left;
+    width: $width;
+    height: 76vh;
+    margin-left: -57px;
     border-radius: 10px;
     font-size: 30px;
   }
 }
+
+@keyframes open-new-task-small-screen {
+  @include open-new-task-keyframes(95vw, 2.5vw)
+}
+
+@keyframes open-new-task-medium-screen {
+  @include open-new-task-keyframes(80vw, 10vw)
+}
+
+@keyframes open-new-task-large-screen {
+  @include open-new-task-keyframes(40vw, 30vw)
+}
+
+@mixin open-new-task-animation($direction) {
+  animation: open-new-task-small-screen ease-in-out 0.6s $direction;
+
+  @media screen and (min-width: 1000px) {
+    animation: open-new-task-medium-screen ease-in-out 0.6s $direction;
+  }
+
+  @media screen and (min-width: 2000px) {
+    animation: open-new-task-large-screen ease-in-out 0.6s $direction;
+  }
+}
+
 
 .new-task-container {
   .new-task {
@@ -73,7 +98,7 @@
 }
 
 .new-task-container.opened .new-task {
-  animation: open-new-task ease-in-out 0.6s forwards;
+  @include open-new-task-animation(forwards);
   cursor: default;
 
   .new-task-form {
@@ -84,5 +109,5 @@
 }
 
 .new-task-container.closed .new-task {
-  animation: open-new-task ease-in-out 0.6s reverse;
+  @include open-new-task-animation(reverse);
 }

@@ -4,7 +4,7 @@ class CreateTasks < ActiveRecord::Migration
       t.integer  :user_id,  null: false
       t.string   :subject,  null: false
       t.date     :due_date, null: false
-      t.integer  :estimated_completion_hours, null: false
+      t.float  :estimated_completion_hours, null: false
       t.text     :description, null: false
 
       t.timestamps null: false

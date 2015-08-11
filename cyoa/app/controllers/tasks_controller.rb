@@ -1,21 +1,31 @@
 class TasksController < ApplicationController
   respond_to :json
 
-  validates_presence_of :subject, :due_date, :estimated_completion_hours, :description
-
   def create
-
+    task = Task.new(task_params_for_nested_assignments)
+    puts "!!!!! ---- " + task_params_for_nested_assignments.inspect
+    if task.save
+      render json: task
+    else
+      errors = task.errors.full_messages
+      flash[:error] = errors.first;
+      render(json: errors, status: :unprocessable_entity)
+    end
   end
 
   private
 
   def task_params
     params.require(:task).permit(
-      :recipient_ids
       :subject,
       :due_date,
       :estimated_completion_hours,
       :description,
+      :assignments_attributes => [:recipient_id],
     )
+  end
+
+  def task_params_for_nested_assignments
+    task_params.merge({ user_id: current_user.id })
   end
 end
