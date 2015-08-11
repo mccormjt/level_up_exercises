@@ -11,17 +11,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150810154726) do
+ActiveRecord::Schema.define(version: 20150811040200) do
+
+  create_table "assignments", force: :cascade do |t|
+    t.integer  "task_id",      null: false
+    t.integer  "recipient_id", null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "assignments", ["task_id", "recipient_id"], name: "index_assignments_on_task_id_and_recipient_id", unique: true
 
   create_table "recipients", force: :cascade do |t|
     t.string   "name",         default: "", null: false
     t.string   "phone_number", default: "", null: false
-    t.string   "user_id",      default: "", null: false
+    t.integer  "user_id",                   null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "recipients", ["user_id", "phone_number"], name: "index_recipients_on_user_id_and_phone_number", unique: true
+
+  create_table "tasks", force: :cascade do |t|
+    t.integer  "user_id",                    null: false
+    t.string   "subject",                    null: false
+    t.date     "due_date",                   null: false
+    t.integer  "estimated_completion_hours", null: false
+    t.text     "description",                null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "tasks", ["user_id"], name: "index_tasks_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email"

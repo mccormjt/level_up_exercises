@@ -28,7 +28,7 @@ class RecipientsController < ApplicationController
   end
 
   def search
-    results = Recipient.elastic_search params[:query]
+    results = Recipient.elastic_search(params[:query], current_user.id)
     render(json: results)
   end
 

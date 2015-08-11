@@ -1,5 +1,6 @@
-Recipients = $(function() {
-	var ADDED_RECIPIENT_CLASS         = 'added-recipient',
+Recipients = new function() {
+	var self                          = this,
+		ADDED_RECIPIENT_CLASS         = 'added-recipient',
 		SUGGESTED_RECIPIENT_CLASS     = 'suggested-recipient',
 		FOCUSED_CLASS                 = 'focused',
 		recipients                    = $('.recipients'),
@@ -17,6 +18,18 @@ Recipients = $(function() {
 	recipients.on('mousedown', '.' + SUGGESTED_RECIPIENT_CLASS, addSuggestedRecipientToTaskDom);
 	$(addName).add(addNumber).typeWatch({ callback: fetchRecipientSuggestions, captureLength: 0, wait: 50 });
 
+	self.clear = function() {
+		clearAddedRecipients();
+		unfocusRecipients();
+	};
+
+	self.getAddedRecipientIds = function() {
+		var ids = [];
+		$('.' + ADDED_RECIPIENT_CLASS).each(function() { 
+			ids.push($(this).data('id'));
+		});
+		return ids;
+	};
 
 	function focusRecipients(event) {
 		event.stopPropagation();
@@ -90,6 +103,10 @@ Recipients = $(function() {
 		$.ajax({ url: '/recipients', type: 'DELETE', data: recipientId });
 	}
 
+	function clearAddedRecipients() {
+		recipientHolder.html('');
+	}
+
 	function clearAddRecipientFields() {
 		addName.val('');
 		addNumber.val('');
@@ -109,4 +126,4 @@ Recipients = $(function() {
 		recipientObj.data(recipient);
 		return recipientObj;
 	}
-});
+};

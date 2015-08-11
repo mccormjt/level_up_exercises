@@ -1,4 +1,6 @@
 class Recipient < ActiveRecord::Base
+  has_many :assignments
+  has_many :tasks, through: :assignments
   belongs_to :user
 
   validates_presence_of :user, :name, :phone_number
@@ -6,7 +8,9 @@ class Recipient < ActiveRecord::Base
 
   searchkick word_start: [:name, :phone_number]
 
-  def self.elastic_search(query)
-    search(query, fields: [{name: :word_start}, {phone_number: :word_start}])
+  def self.elastic_search(query, user_id)
+    fields = [{ name: :word_start }, { phone_number: :word_start }]
+    where = { user_id: user_id }
+    search(query, fields: fields, where: where)
   end
 end
