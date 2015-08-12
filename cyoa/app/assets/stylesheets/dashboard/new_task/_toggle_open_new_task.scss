@@ -82,10 +82,9 @@
 }
 
 
-.new-task-container {
-  .new-task {
-    font-size: 20px;
-  }
+.new-task-container .new-task {
+  overflow: hidden;
+  font-size: 20px;
 
   &, &.closed {
     .new-task-form {
@@ -97,9 +96,15 @@
   }
 }
 
-.new-task-container.opened .new-task {
-  @include open-new-task-animation(forwards);
-  cursor: default;
+.new-task-container.opened {
+
+  .animation-container {
+    @include open-new-task-animation(forwards);
+  }
+
+  .new-task {
+    cursor: default;
+  }
 
   .new-task-form {
     opacity: 1;
@@ -108,6 +113,6 @@
   }
 }
 
-.new-task-container.closed .new-task {
+.new-task-container.closed .animation-container {
   @include open-new-task-animation(reverse);
 }

@@ -3,12 +3,22 @@
     <div class='filter-placeholder'></div>
 
     <div class='category new-task-container'>
-      <div class='new-task'>
-        <div class='new-task-title'>
-          <%= fa_icon 'plus' %>
-          <span>New Task</span>
+      <div class='animation-container create-success'>
+        <div class='new-task'>
+          <div class='new-task-title'>
+            <%= fa_icon 'plus' %>
+            <span>New Task</span>
+          </div>
+          <%= render 'dashboard/create_task' %>
         </div>
-        <%= render 'dashboard/create_task' %>
+
+        <div class='backface'>
+          <div class='checkmark'>
+            <div class='check-bar left-check-bar'></div>
+            <div class='check-bar right-check-bar'></div>
+          </div>
+          <p>Created</p>
+        </div>
       </div>
     </div>
 
