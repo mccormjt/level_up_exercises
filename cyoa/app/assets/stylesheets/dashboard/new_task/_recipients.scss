@@ -1,4 +1,4 @@
-.form-group.expander.recipients {
+.new-task-form .form-group.expander.recipients {
   overflow: visible;
 
   .recipient-inputs {
@@ -56,12 +56,13 @@
       padding-right: 32px;
       color: white;
       font-size: 12px;
-      background-color: #204d74;
+      background-color: $highlight-color;
       border-radius: 3px;
       margin: 5px;
       position: relative;
 
       .recipient-phone {
+        color: black;
         padding: 0 10px;
 
         &::before { content: '<' }
@@ -73,7 +74,7 @@
         position: absolute;
         top: 7.5px;
         right: 9px;
-        color: #888;
+        color: $fourth-color;
         cursor: pointer;
         text-shadow: none;
         padding: 0;
@@ -111,17 +112,26 @@
       transition: all ease 0.15s;
 
       &:hover {
-        background-color: #2e6da4;
+        background-color: $highlight-color;
         padding-left: 25px;
+
+        .recipient-name {
+          color: white;
+        }
+
+        .recipient-phone {
+          color: black;
+        }
       }
 
       .recipient-name, .recipient-phone {
         display: block;
         font-size: 16px;
+        transition: color ease 0.15s;
       }
 
       .recipient-phone {
-        color: $secondary-color
+        color: $secondary-color;
       }
 
       .remove {

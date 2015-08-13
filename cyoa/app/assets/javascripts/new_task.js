@@ -1,7 +1,10 @@
 NewTaskForm = new function() {
-	var self         = this,
-		newTask      = $('.new-task-container'),
-		newTaskForm  = $('.new-task-form');
+	var self                          = this,
+		CREATE_SUCCESS_CLASS          = 'create-success',
+		CREATE_SUCCESS_FINISH_CLASS   = 'create-success',
+		newTask                       = $('.new-task-container'),
+		newTaskForm                   = $('.new-task-form', newTask),
+		animationContainer            = $('.animation-container', newTask);
 
 	$('.followup-categories')
 		.on('click', '.new-task-container:not(.opened) .new-task', openNewTaskCreator)
@@ -46,7 +49,25 @@ NewTaskForm = new function() {
 	}
 
 	function createNewTask() {
-		$.post('/tasks', self.extractFormData()).done(closeNewTaskCreator);
+		$.post('/tasks', self.extractFormData()).done(function() {
+			closeNewTaskCreator();
+			showCreateSuccessCheckmark();
+		});
+	}
+
+	function showCreateSuccessCheckmark() {
+		if (self.isAlreadyShowingCheckmark) return;
+		self.isAlreadyShowingCheckmark = true;
+		animationContainer.addClass(CREATE_SUCCESS_CLASS);
+		setTimeout(finishShowingSuccessCheckmark, 1500);
+	}
+
+	function finishShowingSuccessCheckmark() {
+		animationContainer.addClass(CREATE_SUCCESS_FINISH_CLASS) 
+		setTimeout(function() { 
+			animationContainer.removeClass(CREATE_SUCCESS_CLASS + ' ' + CREATE_SUCCESS_FINISH_CLASS);
+			self.isAlreadyShowingCheckmark = false;
+		}, 900);
 	}
 
 	function openNewTaskCreator() {

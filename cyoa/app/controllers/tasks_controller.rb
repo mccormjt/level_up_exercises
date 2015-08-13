@@ -1,9 +1,12 @@
 class TasksController < ApplicationController
   respond_to :json
 
+  def index
+    @user_tasks
+  end
+
   def create
     task = Task.new(task_params_for_nested_assignments)
-    puts "!!!!! ---- " + task_params_for_nested_assignments.inspect
     if task.save
       render json: task
     else

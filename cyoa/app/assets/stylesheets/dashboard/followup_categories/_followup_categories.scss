@@ -41,7 +41,7 @@
 
     &:hover, &.active {
       color: lighten($primary-color, 5%);
-      background-color: darken($third-color, 15%);
+      background-color: $fourth-color;
     }
   }
 }

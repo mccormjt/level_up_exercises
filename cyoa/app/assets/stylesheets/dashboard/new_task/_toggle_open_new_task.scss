@@ -47,7 +47,7 @@
   }
   
   100% {
-    top: 150px;
+    top: 70px;
     left: $left;
     width: $width;
     height: 76vh;
@@ -87,29 +87,40 @@
   font-size: 20px;
 
   &, &.closed {
+    .new-task-title, .new-task-form {
+      transition: all ease 0.2s;
+      transition-delay: 0;
+    }
+
     .new-task-form {
       opacity: 0;
       visibility: hidden;
-      transition: all ease 0.2s;
-      transition-delay: 0;
     }
   }
 }
 
 .new-task-container.opened {
+  .new-task-title, .new-task-form {
+    transition-delay: 0.45s;
+  }
+
+  .new-task-title {
+    box-shadow: 1px 1px 2px black;
+    background-color: $fourth-color;
+  }
 
   .animation-container {
     @include open-new-task-animation(forwards);
   }
 
   .new-task {
+    padding-top: 35px;
     cursor: default;
   }
 
   .new-task-form {
     opacity: 1;
     visibility: visible;
-    transition-delay: 0.45s;
   }
 }
 
