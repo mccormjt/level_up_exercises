@@ -1,8 +1,16 @@
 class TasksController < ApplicationController
   respond_to :json
 
-  def index
-    @user_tasks
+  def recieved
+    render_filtered_tasks(:recieved_by, current_user.phone_number)
+  end
+
+  def sent
+    render_filtered_tasks(:sent_by)
+  end
+
+  def archived
+    render_filtered_tasks(:archived_by)
   end
 
   def create
@@ -17,6 +25,12 @@ class TasksController < ApplicationController
   end
 
   private
+
+  def render_filtered_tasks(filter, filter_arg=nil)
+    filter_arg ||= current_user.id
+    @tasks = Task.public_send(filter, filter_arg)
+    render json: @tasks.expand_into_detailed_assignments
+  end
 
   def task_params
     params.require(:task).permit(

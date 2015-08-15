@@ -1,7 +1,9 @@
 class HomeController < ApplicationController
+  skip_before_action :auth_user!
   helper_method :resource_name, :resource, :devise_mapping
 
   def index
+    render :index
   end
 
   def login

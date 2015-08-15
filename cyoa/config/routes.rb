@@ -15,7 +15,13 @@ Rails.application.routes.draw do
     post 'ensure'
   end
 
-  resources :tasks
+  resources(:tasks) do
+    collection do
+      get 'recieved'
+      get 'sent'
+      get 'archived'
+    end
+  end
 
 
   # The priority is based upon order of creation: first created -> highest priority.

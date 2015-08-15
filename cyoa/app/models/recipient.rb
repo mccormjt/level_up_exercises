@@ -1,7 +1,8 @@
 class Recipient < ActiveRecord::Base
+  belongs_to :user
+  belongs_to :assignment
   has_many :assignments, inverse_of: :recipient
   has_many :tasks, through: :assignments
-  belongs_to :user
 
   validates_presence_of :user, :name, :phone_number
   validates :phone_number, uniqueness: true, phony_plausible: { default_country_code: 'US' }
