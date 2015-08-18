@@ -4,9 +4,10 @@ class RegistrationsController < Devise::RegistrationsController
   
   use_growlyflash
 
-  after_action :authentication_flash
+  skip_before_action :auth_user!
+  after_action :flash_user_errors
 
-  def authentication_flash
+  def flash_user_errors
     flash[:error] = resource.errors.full_messages.first if resource.errors.any?
   end
 

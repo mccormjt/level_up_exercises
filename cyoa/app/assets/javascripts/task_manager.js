@@ -1,8 +1,8 @@
-TasksManager = new function() {
+TaskManager = new function() {
 	var self                      = this,
 		SORT_OPTION_CLASS         = 'sort-option',
 		ACTIVE_SORT_OPTION_CLASS  = 'active',
-		REFRESH_TASKS_INTERVAL    = 30000;
+		REFRESH_TASKS_INTERVAL    = 30000000;
 
 	self.filters = {};
 
@@ -38,32 +38,57 @@ TasksManager = new function() {
 		}
 
 		function loadTaskJsonIntoFilterView(tasks) {
-			var taskRows =  _.reduce(tasks, function(memo, task) {
+			taskData = $.isEmptyObject(tasks) ? noTasksMessage(filterName) : reduceTasksToRows(tasks);
+			options.taskContainer.empty().append(taskData);
+		}
+
+		function reduceTasksToRows(tasks) {
+			return _.reduce(tasks, function(memo, task) {
 				return memo.add(createTaskFilterRow(task, false));
 			}, $(''));
-			options.taskContainer.empty().append(taskRows);
 		}
 
 		function createTaskFilterRow(task, isHeaderRow) {
-			var cellType  = isHeaderRow ? 'th' : 'td',
-				to        = options.fields.to   ? createCell(task.to, 'to')   : '',
-			    from      = options.fields.from ? createCell(task.from, 'from') : '',
-			    subject   = createCell(task.subject, 'subject'),
-			    due       = createCell(task.due_date, 'due'),
-			    // status    = createCell(task.status, 'status'),
-			    remove    = createCell($('<i />'), 'remove-task ' + options.removeType);
+			var cellType          = isHeaderRow ? 'th' : 'td',
+				relatedRecipient  = options.fields.to ? task.to : task.from;
+				to                = options.fields.to   ? createCell(cellType, task.to, 'to')     : '',
+			    from              = options.fields.from ? createCell(cellType, task.from, 'from') : '',
+			    subject           = createCell(cellType, task.subject, 'subject'),
+			    due               = createCell(cellType, task.due_date, 'due'),
+			    remove            = createRemoveCell(cellType, relatedRecipient, options.removeType);
 
-			function createCell(html, clazz) {
-				return $('<' + cellType + '/>', { class: 'task-field ' + clazz, html: html });
-			}
-
-			return $('<tr />', { class: 'task-row' }).append(to, from, subject, due, status, remove);
+			var row = $('<tr />', { class: 'task-row' }).append(to, from, subject, due, status, remove);
+			row.data('task-id', task.id);
+			return row;
 		}
 	}
+
+	function createCell(cellType, html, clazz) {
+		return $('<' + cellType + '/>', { class: 'task-field ' + clazz, html: html });
+	}
+
+	function createRemoveCell(cellType, relatedRecipient, removeType) {
+		var remover = "<i class='remover'>\
+						<div class='remove-controls'>\
+							<h1>Archive?</h1>\
+							<p> If you stop this task, " + relatedRecipient + " will be notified </p>\
+					    	<div class='control-btns'>\
+					    		<button class='btn btn-primary archive-btn'>Archive</button>\
+					    		<button class='btn btn-danger cancel-btn'>Cancel</button>\
+					    	</div>\
+					    </div>\
+					   </i>";
+
+		return createCell(cellType, remover, 'remove-task ' + removeType);
+	}
+
+	function noTasksMessage(type) {
+		return '<h2 class="no-tasks-msg"> No ' + type + ' tasks </h2>';
+	} 
 };
 
 
-TasksManager.createFilter('recieved', {
+TaskManager.createFilter('recieved', {
 	sortOptionsContainer:  $('.recieved-sort-options'),
 	taskContainer:         $('.recieved-tasks'),
 	url:                   '/tasks/recieved',
@@ -71,7 +96,7 @@ TasksManager.createFilter('recieved', {
 	removeType:            'archive'
 });
 
-TasksManager.createFilter('sent', {
+TaskManager.createFilter('sent', {
 	sortOptionsContainer:  $('.sent-sort-options'),
 	taskContainer:         $('.sent-tasks'),
 	url:                   '/tasks/sent',
@@ -79,7 +104,7 @@ TasksManager.createFilter('sent', {
 	removeType:            'archive'
 });
 
-TasksManager.createFilter('archived', {
+TaskManager.createFilter('archived', {
 	sortOptionsContainer:  $('.archived-sort-options'),
 	taskContainer:         $('.archived-tasks'),
 	url:                   '/tasks/archived',
@@ -87,4 +112,4 @@ TasksManager.createFilter('archived', {
 	removeType:            'delete'
 });
 
-TasksManager.refreshAllTaskFilters();
+TaskManager.refreshAllTaskFilters();

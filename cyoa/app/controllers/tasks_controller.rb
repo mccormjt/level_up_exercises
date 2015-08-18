@@ -2,15 +2,18 @@ class TasksController < ApplicationController
   respond_to :json
 
   def recieved
-    render_filtered_tasks(:recieved_by, current_user.phone_number)
+    tasks = Task.recieved_by(current_user.phone_number).unarchived
+    render_filtered_tasks(tasks)
   end
 
   def sent
-    render_filtered_tasks(:sent_by)
+    tasks = Task.sent_by(current_user.id).unarchived
+    render_filtered_tasks(tasks)
   end
 
   def archived
-    render_filtered_tasks(:archived_by)
+    tasks = Task.related_to(current_user.id, current_user.phone_number).archived
+    render_filtered_tasks(tasks)
   end
 
   def create
@@ -24,12 +27,16 @@ class TasksController < ApplicationController
     end
   end
 
+  def archive
+    Task.find(params[:id]).archive!
+    flash[:success] = 'Successfully Archived Task'
+    head :no_content
+  end
+
   private
 
-  def render_filtered_tasks(filter, filter_arg=nil)
-    filter_arg ||= current_user.id
-    @tasks = Task.public_send(filter, filter_arg)
-    render json: @tasks.expand_into_detailed_assignments
+  def render_filtered_tasks(tasks)
+    render json: Task.expand_into_detailed_assignments(tasks)
   end
 
   def task_params

@@ -20,6 +20,7 @@ Rails.application.routes.draw do
       get 'recieved'
       get 'sent'
       get 'archived'
+      delete 'archive/:id', action: :archive
     end
   end
 

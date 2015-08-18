@@ -1,0 +1,169 @@
+.followup-filter-content .task-container .remove-task {
+  position: relative;
+  padding: 17px 5px 15px 0;
+
+  i {
+    @extend %font-awesome;
+    font-size: 22px;
+    color: $secondary-color;
+    position: absolute;
+    display: block;
+    top: 15px;
+    left: -7px;
+    opacity: 0;
+    transition: all ease 0.3s, color ease 1ms;
+
+    &:hover {
+      color: $primary-color;
+      opacity: 1;
+    }
+
+    &::before {
+      transition: all ease 0.3s, color ease 1ms;
+    }
+
+    &.removing {
+      z-index: 3000;
+      color: $secondary-color;
+      width: 40vw;
+      left: -50vw;
+      opacity: 1;
+      margin-left: -20vw;
+      cursor: default;
+
+      &::before {
+        font-size: 40vw;
+        margin-left: 80px;
+        text-shadow: 3px 3px 10px black;
+      }
+
+      .remove-controls {
+        opacity: 1;
+        visibility: visible;
+        transition: all ease 1s;
+      }
+    }
+
+    .remove-controls {
+      width: 100%;
+      height: 100%;
+      padding: 10%;
+      box-sizing: border-box;
+      position: absolute;
+      top: 0;
+      left: 80px;
+      color: white;
+      overflow: hidden;
+      visibility: hidden;
+      opacity: 0;
+      transition: none;
+      text-align: center;
+
+      h1 {
+        font-size: 3vw;
+        margin-top: 4%;
+      }
+
+      p {
+        font-size: 1.5vw;
+        padding: 10px;
+        margin-top: 40%;
+        line-height: 1.5;
+      }
+
+      .control-btns {
+        margin-top: 3%;
+        width: 100%;
+        white-space: nowrap;
+
+        .btn {
+          padding: 2%;
+          margin: 2%;
+          font-size: 2vw;
+          border: none;
+          outline: none;
+          box-sizing: border-box;
+          width: 44%;
+        }
+      }
+    }
+  }
+
+  &.archive {
+    i::before {
+      content: '\f187';
+    }
+  }
+
+  &.delete {
+    i { display: none; }
+
+    i::before {
+      content: '\f1f8';
+    }
+  }
+}
+
+@media screen and (min-width: 1300px) {
+  .followup-filter-content .task-container .remove-task i {
+    &.removing {
+      width: 30vw;
+      margin-left: -15vw;
+
+      &::before {
+        font-size: 30vw;
+      }
+    }
+
+    .remove-controls {
+      h1 {
+        font-size: 2.25vw;
+      }
+
+      p {
+        font-size: 1.125vw;
+        padding: 15px;
+      }
+
+      .control-btns {
+        margin-top: 8%;
+
+        .btn {
+          font-size: 1.5vw;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1900px) {
+  .followup-filter-content .task-container .remove-task i {
+    &.removing {
+      width: 20vw;
+      margin-left: -10vw;
+
+      &::before {
+        font-size: 20vw;
+      }
+    }
+
+    .remove-controls {
+      h1 {
+        font-size: 1.5vw;
+      }
+
+      p {
+        font-size: 0.75vw;
+        padding: 10px;
+      }
+
+      .control-btns {
+        margin-top: 11%;
+
+        .btn {
+          font-size: 1vw;
+        }
+      }
+    }
+  }
+}

@@ -72,14 +72,56 @@
     flex-direction: row;
 
     .btn {
-      padding: 12px;
+      padding: 12px 60px;
       font-size: 18px;
       font-weight: bold;
       flex: 1;
       box-shadow: 1px 1px 1px #333;
+      outline: none;
+      transition: all ease 0.25s;
+
+      &.create-btn {
+        position: relative;
+
+        &::after {
+          content: 'Send';
+        }
+      }
 
       &.cancel-btn {
         margin-left: 15px;
+
+        &::after {
+          content: 'Cancel';
+        }
+      }
+    }
+  }
+
+  &.sending {
+    .actions {
+      .btn {
+        opacity: 0.6;
+        pointer-events: none;
+      }
+
+      .create-btn {
+        &::before {
+          width: 40px;
+          height: 40px;
+          display: block;
+          position: absolute;
+          top: 50%;
+          left: 10px;
+          margin-top: -18px;
+          content: '';
+          background-size: cover;
+          background-image: image-url('white_ajax_spinner.svg'); 
+        }
+
+        &::after {
+          content: 'Sending...';
+        }
       }
     }
   }

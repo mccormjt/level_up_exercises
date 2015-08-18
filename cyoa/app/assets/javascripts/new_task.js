@@ -49,10 +49,21 @@ NewTaskForm = new function() {
 	}
 
 	function createNewTask() {
-		$.post('/tasks', self.extractFormData()).done(function() {
+		toggleSendingTaskAnimation(true);
+		
+		$.post('/tasks', self.extractFormData())
+		.done(function() {
 			closeNewTaskCreator();
 			showCreateSuccessCheckmark();
+			TaskManager.refreshAllTaskFilters();
+		})
+		.always(function() {
+			toggleSendingTaskAnimation(false);
 		});
+	}
+
+	function toggleSendingTaskAnimation(isSending) {
+		newTaskForm.toggleClass('sending', isSending);
 	}
 
 	function showCreateSuccessCheckmark() {
@@ -85,6 +96,7 @@ NewTaskForm = new function() {
 		newTask.removeClass(fromClass);
 		newTask[0].offsetWidth = newTask[0].offsetWidth // trigger reflow --> hack to allow reverse animation
 		newTask.addClass(toClass);
+		$('.new-task-overlay').toggleClass('active', isOpen);
 	}
 
 	function expandFormGroup(event) {

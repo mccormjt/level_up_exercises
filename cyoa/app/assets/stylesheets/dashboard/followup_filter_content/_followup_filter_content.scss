@@ -47,12 +47,18 @@
       overflow: hidden;
       overflow-y: scroll; 
       border-radius: 0 0 5px 5px;
+      background-color: lighten($third-color, 60%);
+
+      &.no-scroll {
+        overflow: hidden;
+      }
 
       tr {
         $bg-color: rgba(243,243,243,.85);
         background-color: $bg-color;
         cursor: pointer;
         border-left: 5px solid $bg-color;
+        max-height: 500px;
         transition: all ease 0.1s;
 
         &:nth-child(odd) {
@@ -63,10 +69,18 @@
         &:hover, &.active {
           border-left-color: $secondary-color;
 
-          .remove-task {
+          .remove-task i {
             opacity: 1;
-            pointer-events: auto;
           }
+        }
+
+        &.archiving {
+          max-height: 0;
+          opacity: 0;
+          background-color: $secondary-color;
+          transition: background-color 0.25s ease, 
+                      opacity 0.8s,
+                      max-height 0.5s ease 0.3s;
         }
       }
     }
@@ -108,11 +122,10 @@
     .remove-task {
       flex: none;
       width: 50px;
-      padding: 17px 5px 15px 0;
-      text-align: left;
-      opacity: 0;
-      pointer-events: none;
-      transition: color ease 0.2s, opacity ease 0.1s;
+    }
+
+    th.remove-task i {
+      display: none;
     }
   }
 
@@ -157,5 +170,17 @@
     .archived-content {
       opacity: 1;
     }
+  }
+
+  .no-tasks-msg {
+    width: 250px;
+    font-size: 18px;
+    margin: 10% auto;
+    text-align: center;
+    background-color: $secondary-color;
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    font-weight: normal;
   }
 }

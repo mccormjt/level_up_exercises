@@ -33,15 +33,17 @@ ActiveRecord::Schema.define(version: 20150811040200) do
   add_index "recipients", ["user_id", "phone_number"], name: "index_recipients_on_user_id_and_phone_number", unique: true
 
   create_table "tasks", force: :cascade do |t|
-    t.integer  "user_id",                    null: false
-    t.string   "subject",                    null: false
-    t.date     "due_date",                   null: false
-    t.float    "estimated_completion_hours", null: false
-    t.text     "description",                null: false
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.integer  "user_id",                                    null: false
+    t.string   "subject",                                    null: false
+    t.date     "due_date",                                   null: false
+    t.float    "estimated_completion_hours",                 null: false
+    t.text     "description",                                null: false
+    t.boolean  "archived",                   default: false, null: false
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
   end
 
+  add_index "tasks", ["archived"], name: "index_tasks_on_archived"
   add_index "tasks", ["user_id"], name: "index_tasks_on_user_id"
 
   create_table "users", force: :cascade do |t|
