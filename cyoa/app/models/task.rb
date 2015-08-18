@@ -16,7 +16,7 @@ class Task < ActiveRecord::Base
   alias_attribute :archived?, :archived
 
   after_create :send_creation_sms_to_owner
-  after_create :send_creation_sms_to_recipients
+  after_create :send_new_task_sms_to_recipients
 
   scope :archived, -> { where(archived: true) }
   scope :unarchived, -> { where(archived: false) }
