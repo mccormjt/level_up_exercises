@@ -14,12 +14,15 @@
 ActiveRecord::Schema.define(version: 20150811040200) do
 
   create_table "assignments", force: :cascade do |t|
-    t.integer  "task_id",      null: false
-    t.integer  "recipient_id", null: false
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.integer  "task_id",        null: false
+    t.integer  "recipient_id",   null: false
+    t.integer  "guid",           null: false
+    t.float    "followup_hours"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
+  add_index "assignments", ["recipient_id", "guid"], name: "index_assignments_on_recipient_id_and_guid", unique: true
   add_index "assignments", ["task_id", "recipient_id"], name: "index_assignments_on_task_id_and_recipient_id", unique: true
 
   create_table "recipients", force: :cascade do |t|

@@ -1,14 +1,20 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
   
   root 'home#index'
 
-  devise_for :users, :controllers => { sessions: 'sessions', registrations: 'registrations' }  
+  devise_for :users, :controllers => { sessions: 'sessions', registrations: 'registrations' }
+
+  mount Sidekiq::Web, at: '/sidekiq'
 
   get '/login', to: 'home#login'
 
   get '/signup', to: 'home#signup'
 
   get '/dashboard', to: 'dashboard#index'
+
+  post '/twilio/recieve-sms', to: 'twilio#recieve_sms'
 
   resource(:recipients, only: :destroy) do
     get  'search'

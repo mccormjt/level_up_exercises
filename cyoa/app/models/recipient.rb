@@ -11,6 +11,8 @@ class Recipient < ActiveRecord::Base
 
   searchkick word_start: [:name, :phone_number]
 
+  include SmsSendable
+
   class << self
     def elastic_search(query, user_id)
       fields = [{ name: :word_start }, { phone_number: :word_start }]
@@ -21,5 +23,10 @@ class Recipient < ActiveRecord::Base
     def decorator_names
       pluck(:name).join(', ')
     end
+  end
+
+  def unarchived_assignments
+    query = {'recipients.id' => id, 'tasks.archived' => false}
+    Assignment.joins(:task, :recipient).where(query)
   end
 end

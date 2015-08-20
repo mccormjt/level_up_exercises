@@ -14,6 +14,8 @@ class User < ActiveRecord::Base
 
   alias_method :sent_tasks, :tasks
 
+  include SmsSendable
+
   def email_required?
     false
   end

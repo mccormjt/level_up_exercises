@@ -1,2 +1,4 @@
 elasticsearch: elasticsearch
-web: rails s
+web: bundle exec rails s
+redis: redis-server /usr/local/etc/redis.conf
+sidekiq: bundle exec sidekiq
