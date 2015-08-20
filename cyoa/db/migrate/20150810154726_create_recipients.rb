@@ -9,5 +9,6 @@ class CreateRecipients < ActiveRecord::Migration
     end
 
     add_index :recipients, [:user_id, :phone_number], unique: true
+    add_index :recipients, :phone_number, unique: true
   end
 end

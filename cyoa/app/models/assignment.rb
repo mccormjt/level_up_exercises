@@ -4,6 +4,7 @@ class Assignment < ActiveRecord::Base
 
   belongs_to :task, inverse_of: :assignments
   belongs_to :recipient, inverse_of: :assignments
+  has_many :statuses
 
   validates_presence_of :task, :recipient
 
@@ -23,9 +24,9 @@ class Assignment < ActiveRecord::Base
   def followup
     message = "Hello #{name}, \"FollowUp\" here. What should we tell "\
               "#{task.user.name} your status is with your task regarding: "\
-              "#{task.subject}? Remember its due #{task.decorator_due_date}!"
+              "#{task.subject}? Remember its due #{task.decorator_due_date}!\n\n"
 
-    message += status_reply_options
+    message << StatusResponseHandler.call_to_action
     send_sms(message)
   end
 
@@ -33,20 +34,12 @@ class Assignment < ActiveRecord::Base
     read_attribute(:followup_hours).try(:hours)
   end
 
-  private
-
-  def status_reply_options
-    "\n\nTaskID: #{guid} "\
-    "\nTo update your status, "\
-    "reply \"STATUS\" followed by the taskID, "\
-    "and one of the status IDs below:"\
-    "\n\nA = UNSTARTED "\
-    "\nB = STARTED "\
-    "\nC = BLOCKED "\
-    "\nD = COMPLETED "\
-    "\n\nFormat: STATUS <taskID> <statusID> - <optional message>"\
-    "\n\n Ex: \"STATUS #{guid} C - I am blocked until you get me the spreadsheets\""
+  def preview_task_msg
+    preview_details = task.details_msg(description: false)
+    "\n\nTASK_ID: #{guid} #{preview_details}"
   end
+
+  private
 
   def update_next_followup_time
     due_days = task.due_date - Date.today
@@ -62,7 +55,7 @@ class Assignment < ActiveRecord::Base
   end
 
   def next_smallest_guid
-    assignments = recipient.unarchived_assignments.order(:guid)
+    assignments = recipient.assignments.order(:guid)
     assignments.each_with_index do |assignment, index|
       return index unless index == assignment.guid
     end

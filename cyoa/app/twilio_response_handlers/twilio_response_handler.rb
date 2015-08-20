@@ -14,11 +14,37 @@ class TwilioResponseHandler
     @from_phone_number
   end
 
-  def self.description
-    raise 'Twililo Response Handlers Must Implement the "description" method'
+  def recipient
+    Recipient.find_by_phone_number(phone_number)
   end
 
   def self.call_to_action
     raise 'Twililo Response Handlers Must Implement the "call_to_action" method'
+  end
+
+  protected
+
+  def args
+    @args ||= parse_body_args
+  end
+
+  def assignment_guid
+    @assignment_guid ||= Integer(args[0]) rescue nil
+  end
+
+  def assignment
+    @assignment ||= recipient && recipient.assignments.find_by_guid(assignment_guid)
+  end
+
+  def task
+    @task ||= assignment.try(:task)
+  end
+
+  private
+
+  def parse_body_args
+    arg_pieces = @body.strip.split(' ')
+    arg_pieces.shift
+    arg_pieces
   end
 end

@@ -1,8 +1,8 @@
 class OptionsResponseHandler < TwilioResponseHandler
   OPTIONS_MSG = "Here are some commands you can respond with:"\
-                "\n\n#{UpcomingResponseHandler.description}"\
-                "\n\n#{ShowResponseHandler.description}"\
-                "\n\n#{StatusResponseHandler.description}"
+                "\n\n#{UpcomingResponseHandler.call_to_action}"\
+                "\n\n#{ShowResponseHandler.call_to_action}"\
+                "\n\n#{StatusResponseHandler.call_to_action}"
 
   def respond
     send_sms(OPTIONS_MSG)

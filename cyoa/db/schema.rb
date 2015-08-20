@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150811040200) do
+ActiveRecord::Schema.define(version: 20150820194106) do
 
   create_table "assignments", force: :cascade do |t|
     t.integer  "task_id",        null: false
@@ -33,7 +33,18 @@ ActiveRecord::Schema.define(version: 20150811040200) do
     t.datetime "updated_at"
   end
 
+  add_index "recipients", ["phone_number"], name: "index_recipients_on_phone_number", unique: true
   add_index "recipients", ["user_id", "phone_number"], name: "index_recipients_on_user_id_and_phone_number", unique: true
+
+  create_table "statuses", force: :cascade do |t|
+    t.integer  "state",         default: 0, null: false
+    t.integer  "assignment_id",             null: false
+    t.text     "message"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "statuses", ["assignment_id"], name: "index_statuses_on_assignment_id"
 
   create_table "tasks", force: :cascade do |t|
     t.integer  "user_id",                                    null: false

@@ -29,4 +29,11 @@ class Recipient < ActiveRecord::Base
     query = {'recipients.id' => id, 'tasks.archived' => false}
     Assignment.joins(:task, :recipient).where(query)
   end
+
+  def upcoming_assignments
+    assignments
+      .joins(:task)
+      .where('tasks.archived' => false)
+      .order('tasks.due_date')
+  end
 end
