@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  DEFAULT_COUNTRY_CODE = { default_country_code: 'US' }
   has_many :tasks
   has_many :recipients
 
@@ -7,14 +8,23 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  phony_normalize :phone_number, default_country_code: 'US'
+  phony_normalize :phone_number, DEFAULT_COUNTRY_CODE
 
   validates_presence_of :name, :phone_number, :password
-  validates :phone_number, uniqueness: true, phony_plausible: { default_country_code: 'US' }
+  validates :phone_number, uniqueness: true, phony_plausible: DEFAULT_COUNTRY_CODE
 
   alias_method :sent_tasks, :tasks
 
   include SmsSendable
+
+  def self.normalize_phone_number(number)
+    PhonyRails.normalize_number(number, DEFAULT_COUNTRY_CODE)
+  end
+
+  def self.find_for_authentication(conditions)
+    conditions[:phone_number] = normalize_phone_number(conditions[:phone_number])
+    super
+  end
 
   def email_required?
     false

@@ -2,7 +2,8 @@ TaskManager = new function() {
 	var self                      = this,
 		SORT_OPTION_CLASS         = 'sort-option',
 		ACTIVE_SORT_OPTION_CLASS  = 'active',
-		REFRESH_TASKS_INTERVAL    = 30000000;
+		REFRESH_TASKS_INTERVAL    = 30000000,
+		archiveControlsTemplate   = $($('#archive-controls-template').html());
 
 	self.filters = {};
 
@@ -50,6 +51,7 @@ TaskManager = new function() {
 
 		function createTaskFilterRow(task, isHeaderRow) {
 			var cellType          = isHeaderRow ? 'th' : 'td',
+				headerRowClass    = isHeaderRow ? 'header-row' : ''
 				relatedRecipient  = options.fields.to ? task.to : task.from;
 				to                = options.fields.to   ? createCell(cellType, task.to, 'to')     : '',
 			    from              = options.fields.from ? createCell(cellType, task.from, 'from') : '',
@@ -57,8 +59,8 @@ TaskManager = new function() {
 			    statusState       = createCell(cellType, task.status_state, 'status-state'),
 			    due               = createCell(cellType, task.due_date, 'due'),
 			    remove            = createRemoveCell(cellType, relatedRecipient, options.removeType);
-			    
-			var row = $('<tr />', { class: 'task-row' }).append(to, from, subject, statusState, due, remove);
+
+			var row = $('<tr />', { class: 'task-row ' + headerRowClass }).append(to, from, subject, statusState, due, remove);
 			row.data('task-id', task.id);
 			return row;
 		}
@@ -69,18 +71,9 @@ TaskManager = new function() {
 	}
 
 	function createRemoveCell(cellType, relatedRecipient, removeType) {
-		var remover = "<i class='remover'>\
-						<div class='remove-controls'>\
-							<h1>Archive?</h1>\
-							<p> If you stop this task, " + relatedRecipient + " will be notified </p>\
-					    	<div class='control-btns'>\
-					    		<button class='btn btn-primary archive-btn'>Archive</button>\
-					    		<button class='btn btn-danger cancel-btn'>Cancel</button>\
-					    	</div>\
-					    </div>\
-					   </i>";
-
-		return createCell(cellType, remover, 'remove-task ' + removeType);
+		var removerTemplate = archiveControlsTemplate.clone();
+		$('.related-recipient', removerTemplate).text(relatedRecipient);
+		return createCell(cellType, removerTemplate, 'remove-task ' + removeType);
 	}
 
 	function noTasksMessage(type) {
