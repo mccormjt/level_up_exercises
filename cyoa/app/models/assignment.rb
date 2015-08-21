@@ -39,6 +39,14 @@ class Assignment < ActiveRecord::Base
     "\n\nTASK_ID: #{guid} #{preview_details}"
   end
 
+  def latest_status
+    statuses.order(created_at: :desc).limit(1).first
+  end
+
+  def latest_decorator_status_state
+    latest_status.try(:decorator_state) || Status::UNSTARTED
+  end
+
   private
 
   def update_next_followup_time

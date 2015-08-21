@@ -1,4 +1,5 @@
 class Status < ActiveRecord::Base
+  UNSTARTED = 'UNSTARTED'
   enum state: [ :unstarted, :started, :blocked, :completed ]
 
   LETTER_TO_STATE_INDEX = 

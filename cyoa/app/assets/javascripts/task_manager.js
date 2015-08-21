@@ -33,7 +33,7 @@ TaskManager = new function() {
 		}
 
 		function insertSortOptionsHeader() {
-			var fields = { to: 'To', from: 'From', subject: 'Subject', due_date: 'Due', status: 'Status' };
+			var fields = { to: 'To', from: 'From', subject: 'Subject', due_date: 'Due', status_state: 'Status' };
 			createTaskFilterRow(fields, true).prependTo(options.sortOptionsContainer);
 		}
 
@@ -54,10 +54,11 @@ TaskManager = new function() {
 				to                = options.fields.to   ? createCell(cellType, task.to, 'to')     : '',
 			    from              = options.fields.from ? createCell(cellType, task.from, 'from') : '',
 			    subject           = createCell(cellType, task.subject, 'subject'),
+			    statusState       = createCell(cellType, task.status_state, 'status-state'),
 			    due               = createCell(cellType, task.due_date, 'due'),
 			    remove            = createRemoveCell(cellType, relatedRecipient, options.removeType);
-
-			var row = $('<tr />', { class: 'task-row' }).append(to, from, subject, due, status, remove);
+			    
+			var row = $('<tr />', { class: 'task-row' }).append(to, from, subject, statusState, due, remove);
 			row.data('task-id', task.id);
 			return row;
 		}

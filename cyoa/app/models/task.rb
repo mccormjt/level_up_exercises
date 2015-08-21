@@ -54,7 +54,9 @@ class Task < ActiveRecord::Base
         to: assignment.recipient.name,
         from: user.name,
         subject: subject,
+        description: description,
         due_date: decorator_due_date,
+        status_state: assignment.latest_decorator_status_state,
       }
     end
   end
