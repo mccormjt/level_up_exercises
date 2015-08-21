@@ -43,7 +43,7 @@ class Task < ActiveRecord::Base
     end
 
     def expand_into_detailed_assignments(tasks)
-      tasks.map(&:detailed_assignments).flatten
+      tasks.order(:due_date).map(&:detailed_assignments).flatten
     end
   end
 

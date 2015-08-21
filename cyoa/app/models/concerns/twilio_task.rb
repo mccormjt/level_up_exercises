@@ -1,5 +1,5 @@
 module TwilioTask
-  DETAILS_MSG_FIELD_DEFAULTS = { subject: true, due_date: true, description: true }
+  DETAILS_MSG_FIELD_DEFAULTS ||= { subject: true, due_date: true, description: true }
   include SmsSendable
 
   def send_creation_sms_to_owner
