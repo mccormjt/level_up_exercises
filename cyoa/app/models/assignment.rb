@@ -13,30 +13,43 @@ class Assignment < ActiveRecord::Base
 
   delegate :name, to: :recipient
   delegate :phone_number, to: :recipient
+  delegate :user, to: :task
 
-  include SmsSendable
+  alias_attribute :archived?, :archived
+
+  scope :archived, -> { where(archived: true) }
+  scope :unarchived, -> { where(archived: false) }
+
+  include TwilioAssignment
+
+  class << self
+    def recieved_by(phone_number)
+      query = {'recipients.phone_number' => phone_number}
+      joins(:recipient).where(query)
+    end
+
+    def sent_by(user_id)
+      query = {'tasks.user_id' => user_id}
+      joins(:task).where(query)
+    end
+
+    def related_to(user_id, phone_number)
+      query = 'tasks.user_id=? OR recipients.phone_number=?'
+      joins(:task, :recipient).where(query, user_id, phone_number)
+    end
+
+    def expanded_task_details(assignments)
+      assignments.map(&:expanded_task_details)
+    end
+  end
 
   def schedule_next_followup
     update_next_followup_time
     FollowupWorker.perform_in(followup_hours, id)
   end
 
-  def followup
-    message = "Hello #{name}, \"FollowUp\" here. What should we tell "\
-              "#{task.user.name} your status is with your task regarding: "\
-              "#{task.subject}? Remember its due #{task.decorator_due_date}!\n\n"
-
-    message << StatusResponseHandler.call_to_action
-    send_sms(message)
-  end
-
   def followup_hours
     read_attribute(:followup_hours).try(:hours)
-  end
-
-  def preview_task_msg
-    preview_details = task.details_msg(description: false)
-    "\n\nTASK_ID: #{guid} #{preview_details}"
   end
 
   def latest_status
@@ -45,6 +58,24 @@ class Assignment < ActiveRecord::Base
 
   def latest_decorator_status_state
     latest_status.try(:decorator_state) || Status::UNSTARTED
+  end
+
+  def archive!
+    update(archived: true)
+    send_archived_msg
+  end
+
+  def expanded_task_details
+    {
+      task_id: task.id,
+      assignment_id: id,
+      to: recipient.name,
+      from: user.name,
+      subject: task.subject,
+      description: task.description,
+      due_date: task.decorator_due_date,
+      status_state: latest_decorator_status_state,
+    }
   end
 
   private

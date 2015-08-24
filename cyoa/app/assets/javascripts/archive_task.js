@@ -9,7 +9,7 @@ $(function() {
 	function archiveTask(event) {
 		var remover = $(event.currentTarget).closest('.remover'),
 			taskRow = remover.closest('tr'),
-			taskId  = taskRow.data('task-id');
+			assignment_id = taskRow.data('task').assignment_id;
 
 
 		toggleArchiveConfirmation(remover, false);
@@ -17,7 +17,7 @@ $(function() {
 		var animation = $.Deferred();
 		var archiveRequest = $.ajax({
 			type: 'delete',
-			url:  '/tasks/archive/' + taskId
+			url:  '/assignments/archive/' + assignment_id
 		});
 
 		setTimeout(function() { animation.resolve() }, 800);

@@ -31,7 +31,7 @@ module TwilioTask
     "Hello #{recipient_name}, your contact #{user.name} "\
     "has sent you a new TODO task through "\
     "this automated task \"FollowUp\" system. "\
-    "#{details_msg}"\
+    "#\n{details_msg}"\
     "\n\nWe will check back in for status updates "\
     "every so often until you have completed this task. "\
     "\n\n#{OptionsResponseHandler.call_to_action}"

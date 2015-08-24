@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   DEFAULT_COUNTRY_CODE = { default_country_code: 'US' }
+  
   has_many :tasks
   has_many :recipients
 

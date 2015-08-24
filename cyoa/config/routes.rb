@@ -16,12 +16,14 @@ Rails.application.routes.draw do
 
   post '/twilio/recieve-sms', to: 'twilio#recieve_sms'
 
+  resources(:tasks)
+
   resource(:recipients, only: :destroy) do
     get  'search'
     post 'ensure'
   end
 
-  resources(:tasks) do
+  resources(:assignments) do
     collection do
       get 'recieved'
       get 'sent'

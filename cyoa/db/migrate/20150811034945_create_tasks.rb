@@ -6,12 +6,10 @@ class CreateTasks < ActiveRecord::Migration
       t.date     :due_date,                     null: false
       t.float    :estimated_completion_hours,   null: false
       t.text     :description,                  null: false
-      t.boolean  :archived, default: false,     null: false
 
       t.timestamps null: false
     end
 
     add_index :tasks, :user_id
-    add_index :tasks, :archived
   end
 end

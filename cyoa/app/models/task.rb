@@ -13,56 +13,13 @@ class Task < ActiveRecord::Base
   validates :estimated_completion_hours, numericality: { greater_than: 0 }
   validates_date :due_date, on_or_after: -> { Date.current }
 
-  alias_attribute :archived?, :archived
-
   after_create :send_creation_sms_to_owner
   after_create :send_new_task_sms_to_recipients
 
-  scope :archived, -> { where(archived: true) }
-  scope :unarchived, -> { where(archived: false) }
-
   include TwilioTask
 
-  class << self
-    def build
-      new.assignments.build
-    end
-
-    def recieved_by(phone_number)
-      query = {'recipients.phone_number' => phone_number}
-      joins(:assignments, :recipients).where(query)
-    end
-
-    def sent_by(user_id)
-      where(user_id: user_id)
-    end
-
-    def related_to(user_id, phone_number)
-      query = 'users.id=? OR recipients.phone_number=?'
-      joins(:user, :assignments, :recipients).where(query, user_id, phone_number)
-    end
-
-    def expand_into_detailed_assignments(tasks)
-      tasks.order(:due_date).map(&:detailed_assignments).flatten
-    end
-  end
-
-  def detailed_assignments
-    assignments.map do |assignment|
-      {
-        id: id,
-        to: assignment.recipient.name,
-        from: user.name,
-        subject: subject,
-        description: description,
-        due_date: decorator_due_date,
-        status_state: assignment.latest_decorator_status_state,
-      }
-    end
-  end
-
-  def archive!
-    update(archived: true)
+  def self.build
+    new.assignments.build
   end
 
   def decorator_due_date

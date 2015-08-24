@@ -61,7 +61,7 @@ TaskManager = new function() {
 			    remove            = createRemoveCell(cellType, relatedRecipient, options.removeType);
 
 			var row = $('<tr />', { class: 'task-row ' + headerRowClass }).append(to, from, subject, statusState, due, remove);
-			row.data('task-id', task.id);
+			row.data('task', task);
 			return row;
 		}
 	}
@@ -85,7 +85,7 @@ TaskManager = new function() {
 TaskManager.createFilter('recieved', {
 	sortOptionsContainer:  $('.recieved-sort-options'),
 	taskContainer:         $('.recieved-tasks'),
-	url:                   '/tasks/recieved',
+	url:                   '/assignments/recieved',
 	fields:                { to: false, from: true },
 	removeType:            'archive'
 });
@@ -93,7 +93,7 @@ TaskManager.createFilter('recieved', {
 TaskManager.createFilter('sent', {
 	sortOptionsContainer:  $('.sent-sort-options'),
 	taskContainer:         $('.sent-tasks'),
-	url:                   '/tasks/sent',
+	url:                   '/assignments/sent',
 	fields:                { to: true, from: false },
 	removeType:            'archive'
 });
@@ -101,7 +101,7 @@ TaskManager.createFilter('sent', {
 TaskManager.createFilter('archived', {
 	sortOptionsContainer:  $('.archived-sort-options'),
 	taskContainer:         $('.archived-tasks'),
-	url:                   '/tasks/archived',
+	url:                   '/assignments/archived',
 	fields:                { to: true, from: true },
 	removeType:            'delete'
 });
