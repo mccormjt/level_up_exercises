@@ -13,6 +13,7 @@ class UpcomingResponseHandler < TwilioResponseHandler
 
   def upcoming_tasks_msg
     assignments = recipient.try(:upcoming_assignments)
+    assignments = assignments.try(:limit, NUM_TASKS_TO_DISPLAY)
     return no_upcoming_tasks_msg unless assignments.try(:any?)
     message = "Your Upcoming Tasks:"
     assignments.map(&:preview_task_msg).reduce(message, :<<)

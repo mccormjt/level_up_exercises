@@ -21,6 +21,6 @@ module TwilioAssignment
 
   def preview_task_msg
     preview_details = task.details_msg(description: false)
-    "\n\nTASK_ID: #{guid}\n#{preview_details}"
+    "\n\nTASK_ID: #{guid} #{preview_details}"
   end
 end
