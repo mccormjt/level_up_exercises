@@ -39,7 +39,6 @@
 
       tr {
         padding-left: 5px;
-        padding-right: 15px;
       }
     }
 
@@ -54,12 +53,11 @@
         overflow: hidden;
       }
 
-      tr {
+      .task-row-container {
         $bg-color: rgba(243,243,243,.85);
         background-color: $bg-color;
-        cursor: pointer;
+        border-bottom: 1px solid #ccc;
         border-left: 5px solid $bg-color;
-        max-height: 500px;
         transition: all ease 0.1s;
 
         &:nth-child(odd) {
@@ -67,7 +65,7 @@
           background-color: darken($bg-color, 5%);
         }
 
-        &:hover, &.active {
+        &:hover, &.expanded {
           border-left-color: $secondary-color;
 
           .remove-task i {
@@ -82,6 +80,10 @@
           transition: background-color 0.25s ease, 
                       opacity 0.8s,
                       max-height 0.5s ease 0.3s;
+        }
+
+        .task-row {
+          cursor: pointer;
         }
       }
     }
@@ -115,14 +117,14 @@
       flex: 2;
     }
 
-    .status-state {
+    .current-status-state {
       flex: none;
       width: 200px;
     }
 
     .due {
       flex: none;
-      width: 150px;
+      width: 200px;
     }
 
     .remove-task {

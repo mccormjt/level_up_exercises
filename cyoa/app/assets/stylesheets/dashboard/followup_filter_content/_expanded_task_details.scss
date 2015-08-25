@@ -1,0 +1,86 @@
+.followup-filter-content .followup-content .task-container .task-row-container {
+
+  &.expanded {
+    border-bottom: none;
+
+    .task-field {
+      color: white;
+      background-color: $third-color;
+    }
+
+    .task-details {
+      visibility: visible;
+      max-height: 600px;
+      padding: 4%;
+      padding-top: 35px;
+    }
+
+    .remover {
+      text-shadow: 1px 1px 2px black;
+    }
+  }
+
+  .task-field {
+    transition: all ease 0.2s;
+  }
+
+  .task-details {
+    width: 100%;
+    height: auto;
+    max-height: 0;
+    padding: 0 4%;
+    box-sizing: border-box;
+    overflow: auto;
+    visibility: hidden;
+    background-color: white;
+    border-bottom: 1px solid #ccc;
+    transition: all 0.4s ease;
+
+    h3 {
+      font-weight: bold;
+      font-family: sans-serif;
+      font-size: 18px;
+    }
+
+    .description p {
+      margin-top: 8px;
+      margin-bottom: 40px;
+    }
+
+    .status-updates {
+      .task-status {
+        margin: 20px 0 25px 0;
+
+        .status-details {
+          width: 230px;
+          padding: 10px 15px;
+          box-sizing: border-box;
+          display: inline-block;
+          border-radius: 3px;
+          box-shadow: 1px 1px 2px black;
+          background-color: $fourth-color;
+          color: white;
+          margin-right: 10px;
+        }
+
+        .status-created-at {
+          color: #ccc;
+          font-style: italic;
+        }
+      }
+
+      .no-status-updates {
+        width: 200px;
+        color: white;
+        font-weight: bold;
+        font-style: italic;
+        padding: 15px;
+        margin: 15px 0;
+        text-align: center;
+        background-color: $fourth-color;
+        border-radius: 5px;
+        border: 2px solid $third-color;
+      }
+    }
+  }
+}

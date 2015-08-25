@@ -21,10 +21,18 @@ class AssignmentsController < ApplicationController
     flash[:success] = 'Successfully Archived Task'
     head :no_content
   end
+  
+  def statuses
+    render json: Status.apply_decorators(assignment.statuses)
+  end
 
   private
 
   def render_filtered_task_assignments(assignments)
     render json: Assignment.expanded_task_details(assignments)
+  end
+
+  def assignment
+    @assignment ||= Assignment.find(params[:id])
   end
 end

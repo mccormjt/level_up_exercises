@@ -1,5 +1,6 @@
 class Status < ActiveRecord::Base
   UNSTARTED = 'UNSTARTED'
+  DEFAULT_TIME_ZONE = 'Central Time (US & Canada)'
   enum state: [ :unstarted, :started, :blocked, :completed ]
 
   LETTER_TO_STATE_INDEX = 
@@ -17,10 +18,21 @@ class Status < ActiveRecord::Base
 
   after_create :send_new_status_msg_to_task_owner
 
-  def self.letter_to_state(letter)
-    normalized_letter = letter.to_sym.downcase
-    state_index = LETTER_TO_STATE_INDEX[normalized_letter]
-    state_index && states.keys[state_index]
+  class << self
+    def letter_to_state(letter)
+      normalized_letter = letter.to_sym.downcase
+      state_index = LETTER_TO_STATE_INDEX[normalized_letter]
+      state_index && states.keys[state_index]
+    end
+
+    def apply_decorators(statuses)
+      statuses.map do |status|
+        status.attributes.merge( 
+          state: status.decorator_state,
+          created_at: status.decorator_created_at,
+        )
+      end
+    end
   end
 
   def send_new_status_msg_to_task_owner
@@ -34,5 +46,9 @@ class Status < ActiveRecord::Base
 
   def decorator_state
     state.upcase
+  end
+
+  def decorator_created_at
+    created_at.in_time_zone(DEFAULT_TIME_ZONE).to_s
   end
 end

@@ -3,7 +3,8 @@ TaskManager = new function() {
 		SORT_OPTION_CLASS         = 'sort-option',
 		ACTIVE_SORT_OPTION_CLASS  = 'active',
 		REFRESH_TASKS_INTERVAL    = 30000000,
-		archiveControlsTemplate   = $($('#archive-controls-template').html());
+		archiveControlsTemplate   = $($('#archive-controls-template').html()),
+		taskDetailsTemplate       = $($('#task-details-template').html());
 
 	self.filters = {};
 
@@ -56,13 +57,16 @@ TaskManager = new function() {
 				to                = options.fields.to   ? createCell(cellType, task.to, 'to')     : '',
 			    from              = options.fields.from ? createCell(cellType, task.from, 'from') : '',
 			    subject           = createCell(cellType, task.subject, 'subject'),
-			    statusState       = createCell(cellType, task.status_state, 'status-state'),
+			    statusState       = createCell(cellType, task.status_state, 'current-status-state'),
 			    due               = createCell(cellType, task.due_date, 'due'),
-			    remove            = createRemoveCell(cellType, relatedRecipient, options.removeType);
+			    remove            = createRemoveCell(cellType, relatedRecipient, options.removeType),
+			    taskDetails       = createTaskDetailsBlock(task.description);
 
 			var row = $('<tr />', { class: 'task-row ' + headerRowClass }).append(to, from, subject, statusState, due, remove);
-			row.data('task', task);
-			return row;
+			var rowContainer = $('<div />', { class: 'task-row-container'}).append(row, taskDetails);
+			rowContainer.data('task', task);
+			!headerRowClass && StatusUpdater.updateTaskCurrentStatus(rowContainer, task.status_state);
+			return rowContainer;
 		}
 	}
 
@@ -74,6 +78,12 @@ TaskManager = new function() {
 		var removerTemplate = archiveControlsTemplate.clone();
 		$('.related-recipient', removerTemplate).text(relatedRecipient);
 		return createCell(cellType, removerTemplate, 'remove-task ' + removeType);
+	}
+
+	function createTaskDetailsBlock(description) {
+		var detailsTemplate = taskDetailsTemplate.clone();
+		$('.description p', detailsTemplate).text(description);
+		return detailsTemplate;
 	}
 
 	function noTasksMessage(type) {

@@ -18,4 +18,5 @@
 //= require bootstrap-datepicker
 //= require growlyflash
 //= require turbolinks
+//= require task_status_updater
 //= require_tree .

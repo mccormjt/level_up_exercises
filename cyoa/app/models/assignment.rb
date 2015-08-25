@@ -52,12 +52,16 @@ class Assignment < ActiveRecord::Base
     read_attribute(:followup_hours).try(:hours)
   end
 
-  def latest_status
-    statuses.order(created_at: :desc).limit(1).first
+  def statuses
+    super.order(created_at: :desc)
   end
 
-  def latest_decorator_status_state
-    latest_status.try(:decorator_state) || Status::UNSTARTED
+  def current_status
+    statuses.limit(1).first
+  end
+
+  def current_status_state_decorator
+    current_status.try(:decorator_state) || Status::UNSTARTED
   end
 
   def archive!
@@ -74,7 +78,7 @@ class Assignment < ActiveRecord::Base
       subject: task.subject,
       description: task.description,
       due_date: task.decorator_due_date,
-      status_state: latest_decorator_status_state,
+      status_state: current_status_state_decorator,
     }
   end
 

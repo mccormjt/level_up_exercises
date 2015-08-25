@@ -2,18 +2,19 @@ $(function() {
 	var REMOVING_CLASS = 'removing',
 		REMOVE_TOP     = 300;
 
-	$('.prism').on('click', '.archive .remover:not(.' + REMOVING_CLASS + ')', openArchiveConfirmation);
-	$('.prism').on('click', '.archive .cancel-btn', closeArchiveConfirmation);
-	$('.prism').on('click', '.archive .archive-btn', archiveTask);
+	$('.task-container').on('click', '.archive .remover:not(.' + REMOVING_CLASS + ')', openArchiveConfirmation);
+	$('.task-container').on('click', '.archive .cancel-btn', closeArchiveConfirmation);
+	$('.task-container').on('click', '.archive .archive-btn', archiveTask);
+	$('.task-container').on('click', '.archive', stopEventPropagation);
 
 	function archiveTask(event) {
 		var remover = $(event.currentTarget).closest('.remover'),
-			taskRow = remover.closest('tr'),
-			assignment_id = taskRow.data('task').assignment_id;
+			taskContainer = remover.closest('.task-row-container'),
+			assignment_id = taskContainer.data('task').assignment_id;
 
 
 		toggleArchiveConfirmation(remover, false);
-		taskRow.addClass('archiving');
+		taskContainer.addClass('archiving');
 		var animation = $.Deferred();
 		var archiveRequest = $.ajax({
 			type: 'delete',
@@ -45,5 +46,9 @@ $(function() {
 		var elmTop     = element.offset().top,
 			adjustment = REMOVE_TOP - elmTop;
 		element.css('top', adjustment + 'px');
+	}
+
+	function stopEventPropagation(event) {
+		event.stopPropagation();
 	}
 });

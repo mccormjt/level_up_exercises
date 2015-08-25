@@ -25,6 +25,6 @@ class Task < ActiveRecord::Base
   def decorator_due_date
     return 'Today' if Date.today == due_date
     return 'Tomorrow' if Date.tomorrow == due_date
-    due_date
+    due_date.to_s
   end
 end

@@ -30,6 +30,10 @@ Rails.application.routes.draw do
       get 'archived'
       delete 'archive/:id', action: :archive
     end
+
+    member do
+      get 'statuses'
+    end
   end
 
 

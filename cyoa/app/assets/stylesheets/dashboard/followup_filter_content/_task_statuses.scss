@@ -1,0 +1,44 @@
+@mixin status-state($color, $text) {
+  .status-state {
+    &::before {
+      background-color: $color;
+    }
+
+    &::after {
+      content: $text;
+    }
+  }
+}
+
+.task-status {
+
+  .status-state {
+    &::before {
+      content: '';
+      width: 15px;
+      height: 15px;
+      display: inline-block;
+      margin-right: 10px;
+      margin-bottom: -1px;
+      border-radius: 100%;
+      opacity: 0.8;
+      box-shadow: 0.5px 0.5px 1px black;
+    }
+  }
+
+  &.unstarted {
+    @include status-state(red, 'UNSTARTED');
+  }
+
+  &.started {
+    @include status-state(green, 'STARTED');
+  }
+
+  &.blocked {
+    @include status-state(yellow, 'BLOCKED');
+  }
+
+  &.completed {
+    @include status-state(blue, 'COMPLETED');
+  }
+}
