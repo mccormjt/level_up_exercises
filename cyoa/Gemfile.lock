@@ -117,6 +117,7 @@ GEM
     hashie (3.4.2)
     hitimes (1.2.2)
     i18n (0.7.0)
+    ice_cube (0.11.1)
     jbuilder (2.3.1)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
@@ -228,6 +229,10 @@ GEM
       json (~> 1.0)
       redis (~> 3.2, >= 3.2.1)
       redis-namespace (~> 1.5, >= 1.5.2)
+    sidetiq (0.6.3)
+      celluloid (>= 0.14.1)
+      ice_cube (= 0.11.1)
+      sidekiq (>= 3.0.0)
     sinatra (1.4.5)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -300,6 +305,7 @@ DEPENDENCIES
   searchkick
   selenium-webdriver
   sidekiq
+  sidetiq
   sinatra
   spring
   sqlite3

@@ -27,4 +27,10 @@ class Task < ActiveRecord::Base
     return 'Tomorrow' if Date.tomorrow == due_date
     due_date.to_s
   end
+
+  def assignments_attributes=(attr)
+    uniq_recipients = attr.values.uniq {|r| r[:recipient_id]}
+    uniq_recipients_hash = Hash[[*uniq_recipients.map.with_index]].invert
+    super(uniq_recipients_hash)
+  end
 end

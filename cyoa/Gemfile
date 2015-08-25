@@ -41,6 +41,8 @@ gem 'validates_timeliness', '~> 3.0'
 gem 'twilio-ruby', '~> 4.2.1'
 gem 'econfig', require: 'econfig/rails'
 gem 'sidekiq'
+# for sidekiq recurring jobs
+gem 'sidetiq'
 # sinatra is used for sidekiq web interface
 gem 'sinatra', :require => nil
 

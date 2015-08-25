@@ -1,6 +1,7 @@
 class Assignment < ActiveRecord::Base
   FOLLOWUP_TIME_REDUCTION_FACTOR = 7
   MIN_FOLLOW_UP_HOURS = 6
+  ARCHIVED_STALE_TIME = 30.days.ago
 
   belongs_to :task, inverse_of: :assignments
   belongs_to :recipient, inverse_of: :assignments
@@ -40,6 +41,10 @@ class Assignment < ActiveRecord::Base
 
     def expanded_task_details(assignments)
       assignments.map(&:expanded_task_details)
+    end
+
+    def destroy_stale_archived
+      archived.where('updated_at < ?', ARCHIVED_STALE_TIME).destroy_all
     end
   end
 
