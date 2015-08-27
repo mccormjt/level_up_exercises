@@ -70,4 +70,8 @@ group :development, :test do
   gem 'selenium-webdriver'
   gem 'database_cleaner'
   gem 'pry'
+  gem 'factory_girl_rails'
+  gem 'faker'
+  gem 'shoulda-matchers', require: false
+  gem 'callback_skipper'
 end

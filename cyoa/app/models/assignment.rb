@@ -94,7 +94,6 @@ class Assignment < ActiveRecord::Base
     followup_days = (due_days.to_f / FOLLOWUP_TIME_REDUCTION_FACTOR).ceil
     followup_hrs = followup_days * 24
     followup_hrs = [followup_hrs, MIN_FOLLOW_UP_HOURS].max
-    # followup_hrs = 0.007
     update(followup_hours: followup_hrs)
   end
 
