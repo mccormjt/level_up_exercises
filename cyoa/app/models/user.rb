@@ -17,6 +17,7 @@ class User < ActiveRecord::Base
   alias_method :sent_tasks, :tasks
 
   include SmsSendable
+  include NameDecorator
 
   def self.normalize_phone_number(number)
     PhonyRails.normalize_number(number, DEFAULT_COUNTRY_CODE)
@@ -29,10 +30,6 @@ class User < ActiveRecord::Base
 
   def email_required?
     false
-  end
-
-  def first_name
-    name.split(' ').first
   end
 
   def recieved_tasks

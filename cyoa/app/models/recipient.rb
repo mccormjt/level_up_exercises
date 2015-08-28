@@ -1,6 +1,5 @@
 class Recipient < ActiveRecord::Base
   belongs_to :user
-  belongs_to :assignment
   has_many :assignments, inverse_of: :recipient
   has_many :tasks, through: :assignments
 
@@ -12,6 +11,7 @@ class Recipient < ActiveRecord::Base
   searchkick word_start: [:name, :phone_number]
 
   include SmsSendable
+  include NameDecorator
 
   class << self
     def elastic_search(query, user_id)

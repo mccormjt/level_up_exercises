@@ -11,6 +11,8 @@ RSpec.describe User, type: :model do
 
   it { should validate_presence_of(:phone_number) }
 
+  it_should_behave_like NameDecorator
+
   it 'should allow correct phone number format' do
     user = build(:user)
     expect(user.valid?).to be true
@@ -24,15 +26,6 @@ RSpec.describe User, type: :model do
   it 'should prefix phone number with a plus' do
     user = create(:user)
     expect(user.phone_number.first).to eq('+')
-  end
-
-  it 'should be able to give me the users first name' do
-    first = 'John'
-    last = 'Doe'
-    name = "#{first} #{last}"
-    user = build(:user, name: name)
-
-    expect(user.first_name).to eq first
   end
 
   it 'should start with no recieved tasks' do
