@@ -2,7 +2,6 @@ require 'twilio_task'
 
 class Task < ActiveRecord::Base
   belongs_to :user
-  belongs_to :assignment
   has_many :recipients, through: :assignments
   has_many :assignments, inverse_of: :task, dependent: :destroy
 
@@ -15,7 +14,7 @@ class Task < ActiveRecord::Base
 
   after_create :send_creation_sms_to_owner
   after_create :send_new_task_sms_to_recipients
-
+ 
   include TwilioTask
 
   def self.build

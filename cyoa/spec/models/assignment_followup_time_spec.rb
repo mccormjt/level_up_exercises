@@ -9,7 +9,7 @@ RSpec.describe Assignment, type: :model do
 
   it 'should have a followup time of 1 day if its due in less than a week' do
     expect_followup_hours_for(
-      task_due_date: Faker::Time.between(Time.now, 1.week.from_now), 
+      task_due_date: Faker::Time.between(Date.tomorrow, 1.week.from_now), 
       expected_followup_hours: 1.day,
     )
   end
@@ -32,6 +32,13 @@ RSpec.describe Assignment, type: :model do
     expect_followup_hours_for(
       task_due_date: Faker::Time.between(29.days.from_now, 5.weeks.from_now), 
       expected_followup_hours: 5.days,
+    )
+  end
+
+  it 'should default to minimum followup time if due date is today' do
+    expect_followup_hours_for(
+      task_due_date: Date.today, 
+      expected_followup_hours: Assignment::MIN_FOLLOW_UP_HOURS.hours,
     )
   end
 

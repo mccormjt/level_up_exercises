@@ -116,4 +116,10 @@ RSpec.describe Assignment, type: :model do
     assignment.archive!
     expect(assignment.archived?).to be true
   end
+
+  it 'should send the user and recipients SMS notifications when archived', skip_before: true do
+    expect(assignment).to receive(:send_sms).with(instance_of(String))
+    expect(assignment).to receive(:send_user_sms).with(instance_of(String))
+    assignment.archive!
+  end
 end
